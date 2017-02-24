@@ -1,0 +1,33 @@
+<html>
+  <head>
+    <script type="text/javascript" src="vendor/lunr.js"></script>
+    <script type="text/javascript" src="vendor/lunr-languages-0.0.5/lunr.stemmer.support.js"></script>
+    <script type="text/javascript" src="vendor/lunr-languages-0.0.5/lunr.es.js"></script>
+    <style>
+    #index_json {
+      height: 60%;
+      width: 60%;
+    }
+    </style>
+  </head>
+  <body>
+    <p><code>jubilación</code> search results: <code id="with_accent">Loading...</code></p>
+    <p><code>jubilacion</code> search results: <code id="without_accent">Loading...</code></p>
+    <p>This is the index:</p>
+    <p><textarea id="index_json">Loading...</textarea></p>
+
+    <script type="text/javascript">
+    var index = lunr(function () {
+      this.use(lunr.es);
+      this.ref('id')
+      this.field('text');
+    });
+    index.add({id: 1, text: 'jubilación'});
+    index.add({id: 2, text: 'jubilacion'});
+
+    document.getElementById("index_json").textContent = JSON.stringify(index, null, 2);
+    document.getElementById("with_accent").textContent = JSON.stringify(index.search('jubilación'), null, 2);
+    document.getElementById("without_accent").textContent = JSON.stringify(index.search('jubilacion'), null, 2);
+    </script>
+  </body>
+</html>
